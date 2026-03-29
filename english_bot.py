@@ -20,7 +20,7 @@ TOPIC_ID     = 9844
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 TIMEZONE     = ZoneInfo("Europe/Istanbul")
 SEND_HOUR    = 13
-SEND_MIN     = 11
+SEND_MIN     = 19
 
 logging.basicConfig(format="%(asctime)s | %(levelname)s | %(message)s", level=logging.INFO)
 log = logging.getLogger(__name__)
