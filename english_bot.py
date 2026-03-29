@@ -20,7 +20,7 @@ TOPIC_ID     = 9844
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 TIMEZONE     = ZoneInfo("Europe/Istanbul")
 SEND_HOUR    = 12
-SEND_MIN     = 48
+SEND_MIN     = 51
 
 logging.basicConfig(format="%(asctime)s | %(levelname)s | %(message)s", level=logging.INFO)
 log = logging.getLogger(__name__)
