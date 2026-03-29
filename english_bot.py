@@ -1,4 +1,3 @@
-# v2
 #!/usr/bin/env python3
 """
 📚 İngilizce Öğrenme Botu
@@ -60,7 +59,7 @@ SADECE JSON formatında yanıt ver, başka hiçbir şey yazma:
     try:
         async with httpx.AsyncClient(timeout=30) as client:
             r = await client.post(
-                f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={GEMINI_API_KEY}",
+                f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}",
                 json={"contents": [{"parts": [{"text": prompt}]}]}
             )
             text = r.json()["candidates"][0]["content"]["parts"][0]["text"]
@@ -126,8 +125,6 @@ async def daily_loop(bot: Bot):
 async def main():
     bot = Bot(token=BOT_TOKEN)
     log.info("İngilizce botu başladı ✅")
-    # Başlangıçta bir test gönderimi
-    await send_daily(bot)
     await daily_loop(bot)
 
 if __name__ == "__main__":
