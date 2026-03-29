@@ -1,3 +1,4 @@
+# v2
 #!/usr/bin/env python3
 """
 📚 İngilizce Öğrenme Botu
