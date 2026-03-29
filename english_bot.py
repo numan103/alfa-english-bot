@@ -17,15 +17,15 @@ import os
 BOT_TOKEN    = "8766994041:AAHMATQ-P8VMPerZyyrXE1LZfQEjOBAq0bg"
 CHAT_ID      = -1003891918143   # @alfasubat
 TOPIC_ID     = 9844
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 TIMEZONE     = ZoneInfo("Europe/Istanbul")
-SEND_HOUR    = 13
-SEND_MIN     = 19
+SEND_HOUR    = 9
+SEND_MIN     = 0
 
 logging.basicConfig(format="%(asctime)s | %(levelname)s | %(message)s", level=logging.INFO)
 log = logging.getLogger(__name__)
 
-# ─── OPENAI İSTEĞİ ───────────────────────────────────────────────────────────
+# ─── GEMİNİ İSTEĞİ ───────────────────────────────────────────────────────────
 async def get_english_content():
     prompt = """Sen bir İngilizce öğretmenisin. Aşağıdaki formatta günlük İngilizce içerik oluştur.
 
@@ -59,19 +59,14 @@ SADECE JSON formatında yanıt ver, başka hiçbir şey yazma:
     try:
         async with httpx.AsyncClient(timeout=30) as client:
             r = await client.post(
-                "https://api.openai.com/v1/chat/completions",
-                headers={"Authorization": f"Bearer {OPENAI_API_KEY}"},
-                json={
-                    "model": "gpt-4o-mini",
-                    "messages": [{"role": "user", "content": prompt}],
-                    "temperature": 0.7
-                }
+                f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}",
+                json={"contents": [{"parts": [{"text": prompt}]}]}
             )
-            text = r.json()["choices"][0]["message"]["content"]
+            text = r.json()["candidates"][0]["content"]["parts"][0]["text"]
             text = text.replace("```json", "").replace("```", "").strip()
             return json.loads(text)
     except Exception as e:
-        log.error(f"OpenAI hatası: {e}")
+        log.error(f"Gemini hatası: {e}")
         return None
 
 # ─── MESAJ FORMATI ────────────────────────────────────────────────────────────
@@ -130,7 +125,6 @@ async def daily_loop(bot: Bot):
 async def main():
     bot = Bot(token=BOT_TOKEN)
     log.info("İngilizce botu başladı ✅")
-    await send_daily(bot)
     await daily_loop(bot)
 
 if __name__ == "__main__":
