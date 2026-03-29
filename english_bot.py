@@ -19,8 +19,8 @@ CHAT_ID      = -1003891918143   # @alfasubat
 TOPIC_ID     = 9844
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 TIMEZONE     = ZoneInfo("Europe/Istanbul")
-SEND_HOUR    = 9
-SEND_MIN     = 0
+SEND_HOUR    = 12
+SEND_MIN     = 57
 
 logging.basicConfig(format="%(asctime)s | %(levelname)s | %(message)s", level=logging.INFO)
 log = logging.getLogger(__name__)
