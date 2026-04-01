@@ -19,8 +19,8 @@ CHAT_ID      = -1003839673622   # @alfatradersmentorship
 TOPIC_ID     = 2
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 TIMEZONE     = ZoneInfo("Europe/Istanbul")
-SEND_HOUR    = 18
-SEND_MIN     = 42
+SEND_HOUR    = 9
+SEND_MIN     = 0
 
 logging.basicConfig(format="%(asctime)s | %(levelname)s | %(message)s", level=logging.INFO)
 log = logging.getLogger(__name__)
@@ -62,7 +62,9 @@ SADECE JSON formatında yanıt ver, başka hiçbir şey yazma:
                 f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}",
                 json={"contents": [{"parts": [{"text": prompt}]}]}
             )
-            text = r.json()["candidates"][0]["content"]["parts"][0]["text"]
+            log.info(f"Gemini yanıtı: {r.status_code} — {r.text[:300]}")
+            data = r.json()
+            text = data["candidates"][0]["content"]["parts"][0]["text"]
             text = text.replace("```json", "").replace("```", "").strip()
             return json.loads(text)
     except Exception as e:
