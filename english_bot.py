@@ -15,8 +15,8 @@ import os
 
 # ─── YAPILANDIRMA ────────────────────────────────────────────────────────────
 BOT_TOKEN    = "8766994041:AAHMATQ-P8VMPerZyyrXE1LZfQEjOBAq0bg"
-CHAT_ID      = -1003891918143   # @alfasubat
-TOPIC_ID     = 9844
+CHAT_ID      = -1003839673622   # @alfatradersmentorship
+TOPIC_ID     = 2
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 TIMEZONE     = ZoneInfo("Europe/Istanbul")
 SEND_HOUR    = 13
