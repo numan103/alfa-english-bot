@@ -20,7 +20,7 @@ TOPIC_ID       = 2
 ANTHROPIC_KEY  = os.environ.get("ANTHROPIC_API_KEY", "")
 TIMEZONE       = ZoneInfo("Europe/Istanbul")
 SEND_HOUR      = 19
-SEND_MIN       = 10
+SEND_MIN       = 16
 
 logging.basicConfig(format="%(asctime)s | %(levelname)s | %(message)s", level=logging.INFO)
 log = logging.getLogger(__name__)
