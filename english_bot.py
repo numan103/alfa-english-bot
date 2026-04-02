@@ -19,8 +19,8 @@ CHAT_ID        = -1003839673622   # @alfatradersmentorship
 TOPIC_ID       = 2
 GEMINI_KEY     = os.environ.get("GEMINI_API_KEY", "")
 TIMEZONE       = ZoneInfo("Europe/Istanbul")
-SEND_HOUR      = 19
-SEND_MIN       = 38
+SEND_HOUR      = 9
+SEND_MIN       = 0
 
 logging.basicConfig(format="%(asctime)s | %(levelname)s | %(message)s", level=logging.INFO)
 log = logging.getLogger(__name__)
@@ -56,7 +56,7 @@ SADECE JSON formatında yanıt ver, başka hiçbir şey yazma:
   }
 }"""
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_KEY}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={GEMINI_KEY}"
 
     try:
         async with httpx.AsyncClient(timeout=30) as client:
@@ -64,6 +64,7 @@ SADECE JSON formatında yanıt ver, başka hiçbir şey yazma:
                 url,
                 headers={"content-type": "application/json"},
                 json={
+                    "model": "gemini-1.5-flash",
                     "contents": [{"parts": [{"text": prompt}]}],
                     "generationConfig": {"maxOutputTokens": 2000}
                 }
