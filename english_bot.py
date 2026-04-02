@@ -59,7 +59,7 @@ SADECE JSON formatında yanıt ver, başka hiçbir şey yazma:
     try:
         async with httpx.AsyncClient(timeout=30) as client:
             r = await client.post(
-                f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}",
+                f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key={GEMINI_API_KEY}",
                 json={"contents": [{"parts": [{"text": prompt}]}]}
             )
             log.info(f"Gemini yanıtı: {r.status_code} — {r.text[:300]}")
