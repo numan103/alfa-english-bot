@@ -71,7 +71,7 @@ SADECE JSON formatında yanıt ver, başka hiçbir şey yazma:
                     "messages": [{"role": "user", "content": prompt}]
                 }
             )
-            log.info(f"Anthropic yanıtı: {r.status_code}")
+            log.info(f"Anthropic yanıtı: {r.status_code} — {r.text[:300]}")
             text = r.json()["content"][0]["text"]
             text = text.replace("```json", "").replace("```", "").strip()
             return json.loads(text)
