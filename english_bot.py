@@ -19,8 +19,8 @@ CHAT_ID        = -1003839673622   # @alfatradersmentorship
 TOPIC_ID       = 2
 ANTHROPIC_KEY  = os.environ.get("ANTHROPIC_API_KEY", "")
 TIMEZONE       = ZoneInfo("Europe/Istanbul")
-SEND_HOUR      = 9
-SEND_MIN       = 0
+SEND_HOUR      = 19
+SEND_MIN       = 10
 
 logging.basicConfig(format="%(asctime)s | %(levelname)s | %(message)s", level=logging.INFO)
 log = logging.getLogger(__name__)
