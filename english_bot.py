@@ -14,18 +14,18 @@ from telegram import Bot
 import os
 
 # ─── YAPILANDIRMA ────────────────────────────────────────────────────────────
-BOT_TOKEN    = "8766994041:AAHMATQ-P8VMPerZyyrXE1LZfQEjOBAq0bg"
-CHAT_ID      = -1003839673622   # @alfatradersmentorship
-TOPIC_ID     = 2
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
-TIMEZONE     = ZoneInfo("Europe/Istanbul")
-SEND_HOUR    = 17
-SEND_MIN     = 40
+BOT_TOKEN      = "8766994041:AAHMATQ-P8VMPerZyyrXE1LZfQEjOBAq0bg"
+CHAT_ID        = -1003839673622   # @alfatradersmentorship
+TOPIC_ID       = 2
+ANTHROPIC_KEY  = os.environ.get("ANTHROPIC_API_KEY", "")
+TIMEZONE       = ZoneInfo("Europe/Istanbul")
+SEND_HOUR      = 9
+SEND_MIN       = 0
 
 logging.basicConfig(format="%(asctime)s | %(levelname)s | %(message)s", level=logging.INFO)
 log = logging.getLogger(__name__)
 
-# ─── GEMİNİ İSTEĞİ ───────────────────────────────────────────────────────────
+# ─── ANTHROPİC İSTEĞİ ────────────────────────────────────────────────────────
 async def get_english_content():
     prompt = """Sen bir İngilizce öğretmenisin. Aşağıdaki formatta günlük İngilizce içerik oluştur.
 
@@ -59,16 +59,24 @@ SADECE JSON formatında yanıt ver, başka hiçbir şey yazma:
     try:
         async with httpx.AsyncClient(timeout=30) as client:
             r = await client.post(
-                f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key={GEMINI_API_KEY}",
-                json={"contents": [{"parts": [{"text": prompt}]}]}
+                "https://api.anthropic.com/v1/messages",
+                headers={
+                    "x-api-key": ANTHROPIC_KEY,
+                    "anthropic-version": "2023-06-01",
+                    "content-type": "application/json"
+                },
+                json={
+                    "model": "claude-haiku-4-5-20251001",
+                    "max_tokens": 2000,
+                    "messages": [{"role": "user", "content": prompt}]
+                }
             )
-            log.info(f"Gemini yanıtı: {r.status_code} — {r.text[:300]}")
-            data = r.json()
-            text = data["candidates"][0]["content"]["parts"][0]["text"]
+            log.info(f"Anthropic yanıtı: {r.status_code}")
+            text = r.json()["content"][0]["text"]
             text = text.replace("```json", "").replace("```", "").strip()
             return json.loads(text)
     except Exception as e:
-        log.error(f"Gemini hatası: {e}")
+        log.error(f"Anthropic hatası: {e}")
         return None
 
 # ─── MESAJ FORMATI ────────────────────────────────────────────────────────────
